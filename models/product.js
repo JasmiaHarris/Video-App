@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const Joi = require('joi');
 
 // eventually this will change to song, video, playlist, etc:
 const productSchema = new mongoose.Schema({
@@ -10,5 +11,19 @@ const productSchema = new mongoose.Schema({
 });
 
 const Product = mongoose.model('Product', productSchema);
-module.exports = Product; 
+
+function validateProduct(product) {
+    const schema = Joi.object({
+        name: Joi.string().min(2).max(50).required(),
+        description: Joi.string().required(),
+        category: Joi.string().min(5).max(50).required(),
+        price: Joi.number().required(),
+    });
+    return schema.validate(product);
+}
+module.exports = Product;
+
+exports.Product = Product;
+exports.validate = validateProduct;
+exports.productSchema = productSchema;
 

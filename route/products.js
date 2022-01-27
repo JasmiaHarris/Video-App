@@ -1,4 +1,4 @@
-const Product = require ('../models/product');
+const { Product, validate } = require ('../models/product');
 const express = require ('express');
 const router = express.Router();
 
@@ -6,6 +6,10 @@ const router = express.Router();
 
 router.post('/', async (req, res) => {
     try{
+        const { error } = validate(req.body);
+        if ( error )
+        return res.status(400).send(error);
+
         const product = new Product({
             name: 'Stanley Kubrick whatever Vacuum',
             description: 'Young Virginia woman investigates local paranormal sightings',
@@ -20,6 +24,16 @@ router.post('/', async (req, res) => {
     return res.status(500).send(`Internal server error ${err}`);
     }
 });
+
+router.get('/', async (req, res) => {
+    try {
+        const products = await Product.find();
+        return res.send(products);
+    } catch (err) {
+        return res.status(500).send(`Internal Server Error: ${ex}`);
+    }
+    
+})
 
 
 
