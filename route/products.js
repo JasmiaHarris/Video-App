@@ -13,15 +13,15 @@ router.post('/', async (req, res) => {
         const product = new Product({
             name: req.body.name,
             description: req.body.description,
-            category: req.body.category,
+            category: req.body.category ,
             price: req.body.price,
         });
         await product.save();
 
         return res.send(product);
-        }
-        catch (err) {
-        return res.status(500).send(`Internal server error ${err}`);
+    }
+    catch (err) {
+    return res.status(500).send(`Internal server error ${err}`);
     }
 });
 
@@ -30,45 +30,11 @@ router.get('/', async (req, res) => {
         const products = await Product.find();
         return res.send(products);
     } catch (err) {
-        return res.status(500).send(`Internal Server Error: ${err}`);
+        return res.status(500).send(`Internal Server Error: ${ex}`);
     }
     
 })
 
-router.get('/:id', async (req, res) => {
-    try {
-        const product = await Product.findById(req.params.id);
-        if (!product)
-            return res.status(400).send(`The product with ID "${req.params.id}" does not exist.`);
-        return res.send(product);
-    } catch (err) {
-        return res.status(500).send(`Internal Server Error: ${err}`);
-    }
-})
-
-router.put('/:id', async (req, res) => {
-    try {
-        const {error} = validate(req.body);
-        if (error) return res.status(400).send(error);
-
-        const product = await Product.findByIdAndUpdate(
-            req.params.id,
-            {
-                name: req.body.name,
-                description: req.body.description,
-                category: req.body.category,
-                price: req.body.price,
-            },
-            {new: true}
-        );
-        if (!product) 
-            return res.status(400).send(`The product with ID "${req.params.id}" does not exist.`);
-        await product.save();
-        return res.send(product);
-    }   catch (err) {
-            return res.status(500).send(`Internal server error "${err}`);
-    }
-});
 
 
 module.exports = router;
