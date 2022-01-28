@@ -16,12 +16,12 @@ function validateProduct(product) {
     const schema = Joi.object({
         name: Joi.string().min(2).max(50).required(),
         description: Joi.string().required(),
-        category: Joi.string().min(5).max(50).required(),
+        category: Joi.string().min(3).max(50).required(),
         price: Joi.number().required(),
     });
     return schema.validate(product);
 }
-module.exports = Product;
+// module.exports = Product;
 
 exports.Product = Product;
 exports.validate = validateProduct;
