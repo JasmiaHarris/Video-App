@@ -21,7 +21,7 @@ function validateProduct(product) {
     });
     return schema.validate(product);
 }
-// module.exports = Product;
+
 
 exports.Product = Product;
 exports.validate = validateProduct;

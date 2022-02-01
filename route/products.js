@@ -71,7 +71,31 @@ router.put('/:id', async (req, res) => {
 });
 
 
+
+
+
+// Here are the YouTube routes
+
+router.post('/', async (req, res) => {
+    try{
+        const { error } = validate(req.body);
+        if ( error )
+        return res.status(400).send(error);
+
+        const comment = new Comment({
+            part: req.body.part,
+            // description: req.body.description,
+            // category: req.body.category,
+            // price: req.body.price,
+        });
+        await comment.save();
+
+        return res.send(comment);
+        }
+        catch (err) {
+        return res.status(500).send(`Internal server error ${err}`);
+    }
+});
+
 module.exports = router;
 
-
-// Here is the testing line
