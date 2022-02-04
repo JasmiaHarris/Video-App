@@ -1,28 +1,31 @@
 const mongoose = require('mongoose');
 const Joi = require('joi');
+const { date } = require('joi');
 
-const videoSchema = new mongoose.Schema({
-    name: {type: String, required: true, minlength: 2, maxlength: 255} ,
-    description: {type: String, required: true} ,
-    category: {type: String, required: true, minlength: 2, maxlength: 50} ,
-    ratings: {type: String},
-    comment: {type: Array, minlength: 1, maxlength: 1000} ,
-    dateModified: { type: Date, default: Date.now} , 
+const commentSchema = new mongoose.Schema({
+    videoId: {type: String} ,
+    likes: {type: Number, default: 0},
+    dislikes: {type: Number, default: 0},
+    comment: {type: String, minlength: 1, maxlength: 1000} ,
+    reply: {type: String, minlength: 1, maxlength: 1000} ,
+    dateModified: {type: Date, default: Date.now} ,
 });
 
-const Video = mongoose.model('Video', videoSchema);
+const Comment = mongoose.model('Comment', commentSchema);
 
-function validateVideo(video) {
+function validateComment(comment) {
     const schema = Joi.object({
-        name: Joi.string().min(2).max(255).required(),
-        description: Joi.string(),
-        category: Joi.string().min(2).max(50).required(),
-        ratings: Joi.string(),
-        comment: Joi.array().min(1).max(1000),
+        videoId: Joi.string(),
+        likes: Joi.number(),
+        dislikes: Joi.number(),
+        comment: Joi.string().min(1).max(1000),
+        reply: Joi.string().min(1).max(1000),
     });
-    return schema.validate(video);
+    return schema.validate(comment);
 }
 
-exports.Video = Video;
-exports.validate = validateVideo;
-exports.videoSchema = videoSchema;
+
+
+exports.Comment = Comment;
+exports.validate = validateComment;
+exports.commentSchema = commentSchema;
