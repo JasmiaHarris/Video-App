@@ -127,15 +127,14 @@ router.put('/:id/dislikes', async (req, res) => {
 //     }
 // });
 
-// router.get('/', async (req, res) => {
-//     try {
-//         const videos = await Video.find();
-//         return res.send(videos);
-//     } catch (err) {
-//         return res.status(500).send(`Internal Server Error: ${err}`);
-//     }
-    
-// })
+router.get('/', async (req, res) => {
+    try {
+        const comments = await Comment.find();
+        return res.send(comments);
+    } catch (err) {
+        return res.status(500).send(`Internal Server Error: ${err}`);
+    }
+})
 
 // router.get('/:id', async (req, res) => {
 //     try {

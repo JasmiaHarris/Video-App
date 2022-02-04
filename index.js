@@ -3,8 +3,11 @@ const express = require('express')
 const app = express();
 const products = require('./route/products')
 const videos = require('./route/videos')
+const cors = require('cors')
+
 
 connectDB();
+app.use(cors());
 
 app.use(express.json());
 app.use('/api/products', products);

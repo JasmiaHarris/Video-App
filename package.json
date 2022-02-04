@@ -19,6 +19,7 @@
   "homepage": "https://github.com/JasmiaHarris/Video-App#readme",
   "dependencies": {
     "config": "^3.3.7",
+    "cors": "^2.8.5",
     "express": "^4.17.2",
     "joi": "^17.6.0",
     "mongoose": "^6.1.8",
